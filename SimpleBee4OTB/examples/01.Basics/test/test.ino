@@ -3,22 +3,52 @@
 //#include <XBee.h>
 
 #include <sbmessage.h>
+#include <sbdevice.h>
+#include <sbdispatcherdevice.h>
 
 
-// create the XBee object
-//XBee xbee = XBee();
-SBMessenger sbmessenger(Serial,SBEndOfMessage,SBCheckSum);
+/*
+ * CallBack dispatching function type
+ */
+class Dispatcher : public SBDispatcherDevice {
+public:
+void dispatch(char * start, int length) {
+  SBDispatcherDevice::dispatch(start, length);
+  Serial.print("-");
+  Serial.print(start);
+  Serial.print("\r");
+}
+};
+
+Dispatcher disp;
+
+SBMessenger sbmessenger(Serial,SBEndOfMessage, &disp, SBCheckSum);
+
+SBActuator led1("001");
+SBActuator led2("001");
+
+/**
+ * List of monitoring devices
+ */
+SBDevice * stbDeviceList[]={ &led1, &led2, NULL };
+
+
 
 void setup() {
   // Start the serial port
   Serial.begin(57600);
+
+  
+  // Init STB component
+  disp.setDeviceList(stbDeviceList); // set the device List to dispatcher
+
   // Tell XBee to use Hardware Serial. It's also possible to use SoftwareSerial
   //xbee.setSerial(Serial);
 
 // put your setup code here, to run once:
   char moduleType[] = "124";
   SBMessageIdentificationReq ident(moduleType);
-  Serial.print("sizeof:");
+  Serial.print("-sizeof:");
   Serial.println(sizeof(SBMessageIdentificationReq));
   
   //SBCheckSum((char*) &ident, sizeof(SBMessageIdentificationReq) - 3, ident.checksum);
@@ -32,12 +62,12 @@ void setup() {
 
 // Send your request
 //xbee.send(zbTx);
-  sbmessenger.send(&ident, sizeof(SBMessageIdentificationReq));
+  //sbmessenger.send(&ident, sizeof(SBMessageIdentificationReq));
 }
 
 void loop() {
-  // put your main code here, to run repeatedly
-  
+  // Looks for incoming message
+  sbmessenger.monitor();
 
 }
 

@@ -1,2 +1,0 @@
-# XbeeTuto
-Xbee tutorial

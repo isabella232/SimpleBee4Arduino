@@ -11,8 +11,9 @@
  * Version:     0.1.0
  * Created:     2015-02-18 by Franck Roudet
  */
-#ifndef __SBMESSAGE_H__
-#define __SBMESSAGE_H__
+#ifndef __SBMESSAGE_H_
+#define __SBMESSAGE_H_
+#include <sbdevicecom.h>
 #include <string.h>
 
 
@@ -29,31 +30,7 @@
  * Calc checksum and store in dest.
  * dest size is 2
  */
-extern void SBCheckSum(char * start, int length, char * dest);
-
-/**
- * Message Request type.
- * Sensor/actuator/object to Open The Box
- */
-struct SBMsgReqType {
-	enum SBMsgReqType_enum : char {
-		identification='I',
-		watchdog='W',
-		data='D',
-		request='R',
-	};
-};
-
-/**
- * Device type.
- * Sensor/actuator/object to Open The Box
- */
-struct SBDeviceType {
-	enum SBDeviceType_enum :char {
-		actuator='A',
-		sensor='C'
-	};
-};
+extern void SBCheckSum(const char * start, int length, char * dest);
 
 const char SBEndOfMessage='\r';
 
@@ -86,10 +63,10 @@ public:
 	/**
 	 * Contructors
 	 */
-	SBMessageIdentificationReq(char *moduleType):SBMessage(SBMsgReqType::identification) {
+	SBMessageIdentificationReq(const char *moduleType):SBMessage(SBMsgReqType::identification) {
 		memcpy(this->moduleType, moduleType, MODULE_TYPE_SIZEOF);
 	};
-	SBMessageIdentificationReq(char deviceType,char *moduleType): SBMessageIdentificationReq(moduleType) {
+	SBMessageIdentificationReq(char deviceType,const char *moduleType): SBMessageIdentificationReq(moduleType) {
 		this->deviceType=deviceType;
 	};
 
@@ -101,11 +78,61 @@ public:
 	char address[ADR_TYPE_SIZEOF];
 
 	/**
-	 * Contructors
+	 * Constructors
 	 */
-	SBMessageIdentificationResponse(char *moduleType):SBMessage(SBTResponseType(SBMsgReqType::identification)) {};
+	SBMessageIdentificationResponse(const char *moduleType):SBMessage(SBTResponseType(SBMsgReqType::identification)) {};
 
 };
 
 
-#endif // __SBMESSAGE_H__
+
+/**
+ * Request Message for LED.
+ * Message request :
+ * Les actionneurs envoient toutes les 500 ms une requête, ils attendent pendant 100 ms une réponse.
+ *
+ */
+class SBMessageRequestReq : public SBMessage {
+public:
+
+	char sbaddress[ADR_TYPE_SIZEOF];
+	char value;
+	const char batDelimit='B';
+	char batterylevel; // Must be '0' empty to '9' full
+
+	/**
+	 * Contructors
+	 */
+	SBMessageRequestReq(const char *sbaddress):SBMessage(SBMsgReqType::request) {
+		memcpy(this->sbaddress, sbaddress, ADR_TYPE_SIZEOF);
+	};
+	SBMessageRequestReq(const char *sbaddress, char value): SBMessageRequestReq(sbaddress) {
+		this->value= '0' + (value % 2);
+	};
+	SBMessageRequestReq(const char *sbaddress, char value, char batterylevel): SBMessageRequestReq(sbaddress,value) {
+		this->batterylevel= '0' + (batterylevel % 10);
+	};
+
+};
+
+/**
+ * Request Respnose Message for LED.
+ */
+class SBMessageRequestResponse : public SBMessage {
+public:
+
+	char sbaddress[ADR_TYPE_SIZEOF];
+	char value;
+
+	/**
+	 * Contructors
+	 */
+	SBMessageRequestResponse(const char *sbaddress):SBMessage(SBTResponseType(SBMsgReqType::request)) {
+		memcpy(this->sbaddress, sbaddress, ADR_TYPE_SIZEOF);
+	};
+	SBMessageRequestResponse(const char *sbaddress, char value): SBMessageRequestResponse(sbaddress) {
+		this->value= '0' + (value % 2);
+	};
+
+};
+#endif // __SBMESSAGE_H_
