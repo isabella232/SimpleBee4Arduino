@@ -5,6 +5,13 @@ SimpleBee base driver
 (c) 2015 - Orange Labs Franck Roudet
 ------------------------------------------------------
 """
+#
+# Copyright (C) 2015 Orange
+# 
+#  This software is distributed under the terms and conditions of the 'Apache-2.0'
+#  license which can be found in the file 'LICENSE.txt' in this package distribution
+#  or at 'http://www.apache.org/licenses/LICENSE-2.0'.
+# 
 import struct
 '''
 Created on 23 févr. 2015
@@ -117,19 +124,31 @@ class PseudoDevice(Fysom):
         logger.info("\t[new value from %s]", self.addr)
         logger.info("\t %s", {key:getattr(self,key, None) for key in ["value", "batteryLevel"]})
 
+
+
+
+
+    def __del__(self):
+        logger.debug("Disconnecting")
+        
+
+
+class ActuarorDevice(PseudoDevice):
     def onafterevt_newvalue(self,e):
         self.value = str(self.value[:-1]) + str((int(str(self.value[-1])) + 1)%10)
         msg=struct.pack("c4s",SBMsgReqType.request.lower(),self.addr)+ self.value
         logger.info("-> send ack event %s", msg)
         self.sendMsg(msg)
         self.evt_valueack()
-
-
-
-def __del__(self):
-        logger.debug("Disconnecting")
         
-      
+class SensorDevice(PseudoDevice):
+    def onafterevt_newvalue(self,e):
+        self.value = str(self.value)
+        msg=struct.pack("c4s",SBMsgReqType.watchdog.lower(),self.addr)+ self.value
+        logger.info("-> send ack event %s", msg)
+        self.sendMsg(msg)
+        self.evt_valueack()    
+          
 
 SBEndOfMessage='\r';
       
@@ -167,10 +186,10 @@ class SimpleBee(object):
             if SBMsgReqType.identification == msgType :
                 (msgType, sensor, typemodule, cksum)  =struct.unpack('cc3s2s', msg)
                 if checkMsgChecksum(msg):
-                    newSBDevice = PseudoDevice(typemodule=sensor+typemodule, ser=self.ser)
+                    newSBDevice = SensorDevice(typemodule=sensor+typemodule, ser=self.ser) if sensor=='C' else ActuarorDevice(typemodule=sensor+typemodule, ser=self.ser)
                     newSBDevice.start()
                     self.list_liveObject[newSBDevice.addr]=newSBDevice
-            elif SBMsgReqType.request == msgType :
+            elif SBMsgReqType.request == msgType  or SBMsgReqType.watchdog == msgType:
                 #(msgType, address, value, batdelimit, batteryLevel, cksum)  =struct.unpack('c4sccc2s', msg)
                 address=msg[1:5]
                 value=msg[5:-4]
@@ -187,7 +206,7 @@ class SimpleBee(object):
             elif msgType == '-':
                 logger.warning("%s", msg)
             else:
-                logger.error("unk msg :'%s'", msg)
+                logger.error("ukn msg :'%s'", msg)
             
 
 

@@ -33,10 +33,9 @@ void SBDevice::setAddr(const char * newAddress ) {
 }
 
 
-/**
- * Actuators
- */
-
+/******************************************
+ *           Actuators
+ ******************************************/
 
 
 /**
@@ -58,6 +57,37 @@ void SBLed::sendHeartBeat(void) {
  */
 void SBLed::newMessage(char *message) {
 	SBMessageRequestResponse *rep=(SBMessageRequestResponse*)message;
+	value = (rep->value - '0') % 2;
+	this->currentState = SBDevice::state::identified;
+	heartbeat_time = millis() + heartbeat_period;
+}
+
+
+/******************************************
+ *           Sensors
+ ******************************************/
+
+
+
+/**
+ * Switch
+ */
+
+/**
+ * Send Heart Beat message
+ */
+void SBSwitch::sendHeartBeat(void) {
+	SBMessageWatchdogReq msg(this->sbaddress, this->value, this->batteryLevel);
+	sbmessenger->send(&msg, sizeof(SBMessageWatchdogReq));
+	this->currentState = SBDevice::state::newvalue;
+}
+
+
+/**
+ * Incoming message for the device
+ */
+void SBSwitch::newMessage(char *message) {
+	SBMessageWatchdogResponse *rep=(SBMessageWatchdogResponse*)message;
 	value = (rep->value - '0') % 2;
 	this->currentState = SBDevice::state::identified;
 	heartbeat_time = millis() + heartbeat_period;

@@ -57,6 +57,7 @@ public:
 	 * Address attribution
 	 */
 	void setAddr(const char * newAddress);
+
 	/**
 	 * Start device
 	 */
@@ -124,5 +125,51 @@ public:
 	virtual void newMessage(char *message);
 };
 
+
+
+/**
+ * Base class for Sensor
+ */
+class SBSensor : public SBDevice {
+public:
+	/**
+	 * Contructors
+	 */
+	SBSensor(const char * moduleType=0L, unsigned long hearbeat_period_ms=60000 /* 1 min */) : SBDevice(moduleType) {
+		deviceType=SBDeviceType::sensor;
+		heartbeat_period=hearbeat_period_ms;
+	}
+
+	/**
+	 * Send Heart Beat message
+	 */
+	//virtual void sendHeartBeat(void);
+
+};
+
+
+/**
+ * SimpleBee Switch
+ * 2 state device = 0 and 1
+ */
+class SBSwitch: public SBSensor {
+public:
+	char value; // 0 or 1
+
+	/**
+	 * Contructors
+	 */
+	SBSwitch(const char * moduleType="001", unsigned long hearbeat_period_ms=60000 /* 1 min */) : SBSensor(moduleType, hearbeat_period_ms) {};
+
+	/**
+	 * Send Heart Beat message
+	 */
+	virtual void sendHeartBeat(void);
+
+	/**
+	 * Incoming message for the device
+	 */
+	virtual void newMessage(char *message);
+};
 
 #endif // __SBDEVICE_H_

@@ -116,7 +116,7 @@ public:
 };
 
 /**
- * Request Respnose Message for LED.
+ * Request Response Message for LED.
  */
 class SBMessageRequestResponse : public SBMessage {
 public:
@@ -135,4 +135,55 @@ public:
 	};
 
 };
+
+
+/**
+ * Watchdog Message for Sensor.
+ * Message request :
+ * Les capteurs se signalent par un message toutes les minutes, si pas de réponse, ils recommencent toutes les 2 secondes jusqu’à réponse correcte.
+ */
+class SBMessageWatchdogReq : public SBMessage {
+public:
+
+	char sbaddress[ADR_TYPE_SIZEOF];
+	char value;
+	const char batDelimit='B';
+	char batterylevel; // Must be '0' empty to '9' full
+
+	/**
+	 * Contructors
+	 */
+	SBMessageWatchdogReq(const char *sbaddress):SBMessage(SBMsgReqType::watchdog) {
+		memcpy(this->sbaddress, sbaddress, ADR_TYPE_SIZEOF);
+	};
+	SBMessageWatchdogReq(const char *sbaddress, char value): SBMessageWatchdogReq(sbaddress) {
+		this->value= '0' + (value % 2);
+	};
+	SBMessageWatchdogReq(const char *sbaddress, char value, char batterylevel): SBMessageWatchdogReq(sbaddress,value) {
+		this->batterylevel= '0' + (batterylevel % 10);
+	};
+
+};
+
+/**
+ * Watchdog Response Message for LED.
+ */
+class SBMessageWatchdogResponse : public SBMessage {
+public:
+
+	char sbaddress[ADR_TYPE_SIZEOF];
+	char value;
+
+	/**
+	 * Contructors
+	 */
+	SBMessageWatchdogResponse(const char *sbaddress):SBMessage(SBTResponseType(SBMsgReqType::watchdog)) {
+		memcpy(this->sbaddress, sbaddress, ADR_TYPE_SIZEOF);
+	};
+	SBMessageWatchdogResponse(const char *sbaddress, char value): SBMessageWatchdogResponse(sbaddress) {
+		this->value= '0' + (value % 2);
+	};
+
+};
+
 #endif // __SBMESSAGE_H_

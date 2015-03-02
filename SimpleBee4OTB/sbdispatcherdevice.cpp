@@ -70,7 +70,7 @@ void SBDispatcherDevice::heartbeat(void) {
 		bool noIdentInProgress = true;
 		unsigned long now = millis();
 		for (SBDevice **device=deviceList;*device;device++) { // check address on remaining devices
-			if (noIdentInProgress && SBDevice::state::started == (*device)->currentState) { // Ask ident for
+			if (noIdentInProgress && SBDevice::state::started == (*device)->currentState) { // Ask ident for device
 				SBMessageIdentificationReq ident((*device)->deviceType, (*device)->moduleType);
 				sbmessenger->send(&ident, sizeof(SBMessageIdentificationReq));
 				(*device)->currentState = SBDevice::state::ukn;
