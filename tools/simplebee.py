@@ -137,15 +137,15 @@ class ActuarorDevice(PseudoDevice):
     def onafterevt_newvalue(self,e):
         self.value = str(self.value[:-1]) + str((int(str(self.value[-1])) + 1)%10)
         msg=struct.pack("c4s",SBMsgReqType.request.lower(),self.addr)+ self.value
-        logger.info("-> send ack event %s", msg)
+        logger.info("-> send actuator ack event %s", msg)
         self.sendMsg(msg)
         self.evt_valueack()
         
 class SensorDevice(PseudoDevice):
     def onafterevt_newvalue(self,e):
         self.value = str(self.value)
-        msg=struct.pack("c4s",SBMsgReqType.watchdog.lower(),self.addr)+ self.value
-        logger.info("-> send ack event %s", msg)
+        msg=struct.pack("c4s",str(e.msgType).lower(),self.addr)+ self.value
+        logger.info("-> send sensor ack event %s", msg)
         self.sendMsg(msg)
         self.evt_valueack()    
           
@@ -189,7 +189,7 @@ class SimpleBee(object):
                     newSBDevice = SensorDevice(typemodule=sensor+typemodule, ser=self.ser) if sensor=='C' else ActuarorDevice(typemodule=sensor+typemodule, ser=self.ser)
                     newSBDevice.start()
                     self.list_liveObject[newSBDevice.addr]=newSBDevice
-            elif SBMsgReqType.request == msgType  or SBMsgReqType.watchdog == msgType:
+            elif msgType in [SBMsgReqType.request, SBMsgReqType.watchdog, SBMsgReqType.data]:
                 #(msgType, address, value, batdelimit, batteryLevel, cksum)  =struct.unpack('c4sccc2s', msg)
                 address=msg[1:5]
                 value=msg[5:-4]
@@ -198,11 +198,11 @@ class SimpleBee(object):
                 if checkMsgChecksum(msg):
                     device=self.list_liveObject.get(address, None)
                     if not device:
-                        logger.error("  ->Unknown device")
+                        logger.error("  ->Unknown device %s", address)
                     else:
                         device.value=value
                         device.batteryLevel=batteryLevel
-                        device.evt_newvalue()
+                        device.evt_newvalue(msgType=msgType)
             elif msgType == '-':
                 logger.warning("%s", msg)
             else:

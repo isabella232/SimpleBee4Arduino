@@ -137,12 +137,12 @@ public:
 };
 
 
+
 /**
- * Watchdog Message for Sensor.
- * Message request :
- * Les capteurs se signalent par un message toutes les minutes, si pas de réponse, ils recommencent toutes les 2 secondes jusqu’à réponse correcte.
+ * Base MessageRequest for switch
+ * 2 states devices
  */
-class SBMessageWatchdogReq : public SBMessage {
+class SBSwitchBaseMessageReq : public SBMessage {
 public:
 
 	char sbaddress[ADR_TYPE_SIZEOF];
@@ -153,11 +153,32 @@ public:
 	/**
 	 * Contructors
 	 */
-	SBMessageWatchdogReq(const char *sbaddress):SBMessage(SBMsgReqType::watchdog) {
+	SBSwitchBaseMessageReq(const char messageType, const char *sbaddress):SBMessage(messageType) {
 		memcpy(this->sbaddress, sbaddress, ADR_TYPE_SIZEOF);
 	};
+	SBSwitchBaseMessageReq(const char messageType, const char *sbaddress, char value): SBSwitchBaseMessageReq(messageType, sbaddress) {
+		this->value= '0' + value;
+	};
+	SBSwitchBaseMessageReq(const char messageType, const char *sbaddress, char value, char batterylevel): SBSwitchBaseMessageReq(messageType, sbaddress,value) {
+		this->batterylevel= '0' + (batterylevel % 10);
+	};
+
+};
+
+/**
+ * Watchdog Message for Sensor.
+ * Message request :
+ * Les capteurs se signalent par un message toutes les minutes, si pas de réponse, ils recommencent toutes les 2 secondes jusqu’à réponse correcte.
+ */
+class SBMessageWatchdogReq : public SBSwitchBaseMessageReq {
+public:
+	/**
+	 * Contructors
+	 */
+	SBMessageWatchdogReq(const char *sbaddress):SBSwitchBaseMessageReq(SBMsgReqType::watchdog,sbaddress) {
+	};
 	SBMessageWatchdogReq(const char *sbaddress, char value): SBMessageWatchdogReq(sbaddress) {
-		this->value= '0' + (value % 2);
+		this->value= '0' + value;
 	};
 	SBMessageWatchdogReq(const char *sbaddress, char value, char batterylevel): SBMessageWatchdogReq(sbaddress,value) {
 		this->batterylevel= '0' + (batterylevel % 10);
@@ -166,7 +187,7 @@ public:
 };
 
 /**
- * Watchdog Response Message for LED.
+ * Watchdog Response Message for sensor.
  */
 class SBMessageWatchdogResponse : public SBMessage {
 public:
@@ -182,6 +203,27 @@ public:
 	};
 	SBMessageWatchdogResponse(const char *sbaddress, char value): SBMessageWatchdogResponse(sbaddress) {
 		this->value= '0' + (value % 2);
+	};
+
+};
+
+
+/**
+ * Data Message for Sensor.
+ * Les capteurs envoient leur valeurs si changement d’état. Ils essayent pendant 2 seconde jusqu’à obtenir un acquittement, sinon attendent le prochain changement d’état
+ */
+class SBMessageDataReq : public SBSwitchBaseMessageReq {
+public:
+	/**
+	 * Contructors
+	 */
+	SBMessageDataReq(const char *sbaddress):SBSwitchBaseMessageReq(SBMsgReqType::data,sbaddress) {
+	};
+	SBMessageDataReq(const char *sbaddress, char value): SBMessageDataReq(sbaddress) {
+		this->value= '0' + value;
+	};
+	SBMessageDataReq(const char *sbaddress, char value, char batterylevel): SBMessageDataReq(sbaddress,value) {
+		this->batterylevel= '0' + (batterylevel % 10);
 	};
 
 };

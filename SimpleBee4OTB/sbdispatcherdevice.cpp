@@ -80,7 +80,7 @@ void SBDispatcherDevice::heartbeat(void) {
 							&& SBDevice::state::started != (*device)->currentState
 							&& SBDevice::state::idle != (*device)->currentState) &&
 					now >= (*device)->heartbeat_time) { // Heartbeat Time
-				(*device)->heartbeat_time= now + (*device)->heartbeat_period; // Next heartbeat
+				(*device)->heartbeat_time= now + ((*device)->heartbeat_retry ? (*device)->heartbeat_retry: (*device)->heartbeat_period); // Next heartbeat
 				(*device)->sendHeartBeat();
 			}
 		}

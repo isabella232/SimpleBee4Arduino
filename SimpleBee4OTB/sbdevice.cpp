@@ -92,3 +92,16 @@ void SBSwitch::newMessage(char *message) {
 	this->currentState = SBDevice::state::identified;
 	heartbeat_time = millis() + heartbeat_period;
 }
+
+
+/**
+ * Send Message Data
+ */
+void SBSwitch::sendMessageData(void) {
+	SBMessageDataReq msg(this->sbaddress, this->value, this->batteryLevel);
+	sbmessenger->send(&msg, sizeof(SBMessageDataReq));
+	this->currentState = SBDevice::state::newvalue;
+	heartbeat_time = millis() + heartbeat_period;
+}
+
+

@@ -26,6 +26,7 @@ public:
 	const char *moduleType;
 	unsigned long heartbeat_time;   // next time to emit heartbeat (ms)
 	unsigned long heartbeat_period; // heart_beat period in milliseconds
+	unsigned long heartbeat_retry;  // heart_beat retry period in milliseconds
 	unsigned char batteryLevel=9;   // Must be 0 empty to 9 full
 
 	SBMessenger * sbmessenger;    // Message manager
@@ -79,15 +80,17 @@ public:
 
 /**
  * Base class for actuator
+ * Les actionneurs envoient toutes les 500 ms une requête, ils attendent pendant 100 ms une réponse.
  */
 class SBActuator : public SBDevice {
 public:
 	/**
 	 * Contructors
 	 */
-	SBActuator(const char * moduleType=0L, unsigned long hearbeat_period_ms=500) : SBDevice(moduleType) {
+	SBActuator(const char * moduleType=0L, unsigned long hearbeat_period_ms=500, unsigned long heartbeat_retry_ms=0 /* No retry */) : SBDevice(moduleType) {
 		deviceType=SBDeviceType::actuator;
 		heartbeat_period=hearbeat_period_ms;
+		heartbeat_retry=heartbeat_retry_ms;
 	}
 
 	/**
@@ -129,21 +132,25 @@ public:
 
 /**
  * Base class for Sensor
+ * Les capteurs envoient leur valeurs si changement d’état. Ils essayent pendant 2 seconde jusqu’à obtenir un acquittement, sinon attendent le prochain changement d’état.
+ * Les capteurs se signalent par un message toutes les minutes, si pas de réponse, ils recommencent toutes les 2 secondes jusqu’à réponse correcte.
  */
 class SBSensor : public SBDevice {
 public:
 	/**
 	 * Contructors
 	 */
-	SBSensor(const char * moduleType=0L, unsigned long hearbeat_period_ms=60000 /* 1 min */) : SBDevice(moduleType) {
+	SBSensor(const char * moduleType=0L, unsigned long hearbeat_period_ms=60000 /* 1 min */, unsigned long heartbeat_retry_ms=2000) : SBDevice(moduleType) {
 		deviceType=SBDeviceType::sensor;
 		heartbeat_period=hearbeat_period_ms;
+		heartbeat_retry=heartbeat_retry_ms;
 	}
 
 	/**
-	 * Send Heart Beat message
+	 * Send Message Data
+	 * Les capteurs envoient leur valeurs si changement d’état. Ils essayent pendant 2 seconde jusqu’à obtenir un acquittement, sinon attendent le prochain changement d’état
 	 */
-	//virtual void sendHeartBeat(void);
+	virtual void sendMessageData(void)=0;
 
 };
 
@@ -170,6 +177,11 @@ public:
 	 * Incoming message for the device
 	 */
 	virtual void newMessage(char *message);
+
+	/**
+	 * Send Message Data
+	 */
+	virtual void sendMessageData(void);
 };
 
 #endif // __SBDEVICE_H_
