@@ -24,7 +24,14 @@
 #define SBTResponseType(SBMsgReq) (SBMsgReq | 0x20)
 
 
-
+/**
+ * Forward declaration
+ */
+class SBDevice;
+class SBSensor;
+class SBSwitch;
+class SBBinaryStateSensor;
+class SBBinaryStateActuator;
 
 /*
  * Calc checksum and store in dest.
@@ -33,6 +40,7 @@
 extern void SBCheckSum(const char * start, int length, char * dest);
 
 const char SBEndOfMessage='\r';
+const char MODULE_TYPE_SIZEOF=3;
 
 
 /**
@@ -54,7 +62,6 @@ public:
  */
 class SBMessageIdentificationReq : public SBMessage {
 public:
-	static const char MODULE_TYPE_SIZEOF=3;
 
 	char deviceType =SBDeviceType::sensor;
 	char moduleType[MODULE_TYPE_SIZEOF];
@@ -66,9 +73,7 @@ public:
 	SBMessageIdentificationReq(const char *moduleType):SBMessage(SBMsgReqType::identification) {
 		memcpy(this->moduleType, moduleType, MODULE_TYPE_SIZEOF);
 	};
-	SBMessageIdentificationReq(char deviceType,const char *moduleType): SBMessageIdentificationReq(moduleType) {
-		this->deviceType=deviceType;
-	};
+	SBMessageIdentificationReq(const SBDevice * const device);
 
 };
 
@@ -87,12 +92,12 @@ public:
 
 
 /**
- * Request Message for LED.
+ * Request Message for Binary State Actuator (LED...).
  * Message request :
  * Les actionneurs envoient toutes les 500 ms une requête, ils attendent pendant 100 ms une réponse.
  *
  */
-class SBMessageRequestReq : public SBMessage {
+class SBBinaryStateMessageRequestReq : public SBMessage {
 public:
 
 	char sbaddress[ADR_TYPE_SIZEOF];
@@ -100,23 +105,28 @@ public:
 	const char batDelimit='B';
 	char batterylevel; // Must be '0' empty to '9' full
 
+	char deviceType =SBDeviceType::actuator;
+	char moduleType[MODULE_TYPE_SIZEOF];
+
 	/**
 	 * Contructors
 	 */
-	SBMessageRequestReq(const char *sbaddress):SBMessage(SBMsgReqType::request) {
+	SBBinaryStateMessageRequestReq(const char *sbaddress):SBMessage(SBMsgReqType::request) {
 		memcpy(this->sbaddress, sbaddress, ADR_TYPE_SIZEOF);
 	};
-	SBMessageRequestReq(const char *sbaddress, char value): SBMessageRequestReq(sbaddress) {
+	SBBinaryStateMessageRequestReq(const char *sbaddress, char value): SBBinaryStateMessageRequestReq(sbaddress) {
 		this->value= '0' + (value % 2);
 	};
-	SBMessageRequestReq(const char *sbaddress, char value, char batterylevel): SBMessageRequestReq(sbaddress,value) {
+	SBBinaryStateMessageRequestReq(const char *sbaddress, char value, char batterylevel): SBBinaryStateMessageRequestReq(sbaddress,value) {
 		this->batterylevel= '0' + (batterylevel % 10);
 	};
+
+	SBBinaryStateMessageRequestReq(const SBBinaryStateActuator * const device);
 
 };
 
 /**
- * Request Response Message for LED.
+ * Request Response Message for Binary State Actuator (LED...).
  */
 class SBMessageRequestResponse : public SBMessage {
 public:
@@ -139,10 +149,10 @@ public:
 
 
 /**
- * Base MessageRequest for switch
+ * Base MessageRequest for binary state sensor (switch...)
  * 2 states devices
  */
-class SBSwitchBaseMessageReq : public SBMessage {
+class SBBinaryStateBaseMessageReq : public SBMessage {
 public:
 
 	char sbaddress[ADR_TYPE_SIZEOF];
@@ -150,58 +160,49 @@ public:
 	const char batDelimit='B';
 	char batterylevel; // Must be '0' empty to '9' full
 
+	char deviceType =SBDeviceType::sensor;
+	char moduleType[MODULE_TYPE_SIZEOF];
+
 	/**
 	 * Contructors
 	 */
-	SBSwitchBaseMessageReq(const char messageType, const char *sbaddress):SBMessage(messageType) {
-		memcpy(this->sbaddress, sbaddress, ADR_TYPE_SIZEOF);
-	};
-	SBSwitchBaseMessageReq(const char messageType, const char *sbaddress, char value): SBSwitchBaseMessageReq(messageType, sbaddress) {
-		this->value= '0' + value;
-	};
-	SBSwitchBaseMessageReq(const char messageType, const char *sbaddress, char value, char batterylevel): SBSwitchBaseMessageReq(messageType, sbaddress,value) {
-		this->batterylevel= '0' + (batterylevel % 10);
-	};
+	SBBinaryStateBaseMessageReq(const char messageType, const SBBinaryStateSensor * const device);
+
 
 };
 
 /**
- * Watchdog Message for Sensor.
+ * Watchdog Message for binary state Sensor.
  * Message request :
  * Les capteurs se signalent par un message toutes les minutes, si pas de réponse, ils recommencent toutes les 2 secondes jusqu’à réponse correcte.
  */
-class SBMessageWatchdogReq : public SBSwitchBaseMessageReq {
+class SBBinaryStateMessageWatchdogReq : public SBBinaryStateBaseMessageReq {
 public:
 	/**
 	 * Contructors
 	 */
-	SBMessageWatchdogReq(const char *sbaddress):SBSwitchBaseMessageReq(SBMsgReqType::watchdog,sbaddress) {
-	};
-	SBMessageWatchdogReq(const char *sbaddress, char value): SBMessageWatchdogReq(sbaddress) {
-		this->value= '0' + value;
-	};
-	SBMessageWatchdogReq(const char *sbaddress, char value, char batterylevel): SBMessageWatchdogReq(sbaddress,value) {
-		this->batterylevel= '0' + (batterylevel % 10);
-	};
-
+	SBBinaryStateMessageWatchdogReq(const SBBinaryStateSensor * const device);
 };
 
 /**
- * Watchdog Response Message for sensor.
+ * Watchdog Response Message for binary state sensor.
  */
-class SBMessageWatchdogResponse : public SBMessage {
+class SBBinaryStateMessageWatchdogResponse : public SBMessage {
 public:
 
 	char sbaddress[ADR_TYPE_SIZEOF];
 	char value;
 
+	char deviceType =SBDeviceType::sensor;
+	char moduleType[MODULE_TYPE_SIZEOF];
+
 	/**
 	 * Contructors
 	 */
-	SBMessageWatchdogResponse(const char *sbaddress):SBMessage(SBTResponseType(SBMsgReqType::watchdog)) {
+	SBBinaryStateMessageWatchdogResponse(const char *sbaddress):SBMessage(SBTResponseType(SBMsgReqType::watchdog)) {
 		memcpy(this->sbaddress, sbaddress, ADR_TYPE_SIZEOF);
 	};
-	SBMessageWatchdogResponse(const char *sbaddress, char value): SBMessageWatchdogResponse(sbaddress) {
+	SBBinaryStateMessageWatchdogResponse(const char *sbaddress, char value): SBBinaryStateMessageWatchdogResponse(sbaddress) {
 		this->value= '0' + (value % 2);
 	};
 
@@ -209,23 +210,15 @@ public:
 
 
 /**
- * Data Message for Sensor.
+ * Data Message for binary state  sensor.
  * Les capteurs envoient leur valeurs si changement d’état. Ils essayent pendant 2 seconde jusqu’à obtenir un acquittement, sinon attendent le prochain changement d’état
  */
-class SBMessageDataReq : public SBSwitchBaseMessageReq {
+class SBBinaryStateMessageDataReq : public SBBinaryStateBaseMessageReq {
 public:
 	/**
 	 * Contructors
 	 */
-	SBMessageDataReq(const char *sbaddress):SBSwitchBaseMessageReq(SBMsgReqType::data,sbaddress) {
-	};
-	SBMessageDataReq(const char *sbaddress, char value): SBMessageDataReq(sbaddress) {
-		this->value= '0' + value;
-	};
-	SBMessageDataReq(const char *sbaddress, char value, char batterylevel): SBMessageDataReq(sbaddress,value) {
-		this->batterylevel= '0' + (batterylevel % 10);
-	};
-
+	SBBinaryStateMessageDataReq(const SBBinaryStateSensor * const device);
 };
 
 #endif // __SBMESSAGE_H_

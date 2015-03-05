@@ -39,15 +39,15 @@ void SBDevice::setAddr(const char * newAddress ) {
 
 
 /**
- * Led
+ * SBBinaryStateActuator, and SBLed
  */
 
 /**
  * Send Heart Beat message
  */
-void SBLed::sendHeartBeat(void) {
-	SBMessageRequestReq msg(this->sbaddress, this->value, this->batteryLevel);
-	sbmessenger->send(&msg, sizeof(SBMessageRequestReq));
+void SBBinaryStateActuator::sendHeartBeat(void) {
+	SBBinaryStateMessageRequestReq msg(this);
+	sbmessenger->send(&msg, sizeof(SBBinaryStateMessageRequestReq));
 	this->currentState = SBDevice::state::newvalue;
 }
 
@@ -55,7 +55,7 @@ void SBLed::sendHeartBeat(void) {
 /**
  * Incoming message for the device
  */
-void SBLed::newMessage(char *message) {
+void SBBinaryStateActuator::newMessage(char *message) {
 	SBMessageRequestResponse *rep=(SBMessageRequestResponse*)message;
 	value = (rep->value - '0') % 2;
 	this->currentState = SBDevice::state::identified;
@@ -70,15 +70,15 @@ void SBLed::newMessage(char *message) {
 
 
 /**
- * Switch
+ * Binary state sensor switch
  */
 
 /**
  * Send Heart Beat message
  */
-void SBSwitch::sendHeartBeat(void) {
-	SBMessageWatchdogReq msg(this->sbaddress, this->value, this->batteryLevel);
-	sbmessenger->send(&msg, sizeof(SBMessageWatchdogReq));
+void SBBinaryStateSensor::sendHeartBeat(void) {
+	SBBinaryStateMessageWatchdogReq msg(this);
+	sbmessenger->send(&msg, sizeof(SBBinaryStateMessageWatchdogReq));
 	this->currentState = SBDevice::state::newvalue;
 }
 
@@ -86,8 +86,8 @@ void SBSwitch::sendHeartBeat(void) {
 /**
  * Incoming message for the device
  */
-void SBSwitch::newMessage(char *message) {
-	SBMessageWatchdogResponse *rep=(SBMessageWatchdogResponse*)message;
+void SBBinaryStateSensor::newMessage(char *message) {
+	SBBinaryStateMessageWatchdogResponse *rep=(SBBinaryStateMessageWatchdogResponse*)message;
 	value = (rep->value - '0') % 2;
 	this->currentState = SBDevice::state::identified;
 	heartbeat_time = millis() + heartbeat_period;
@@ -97,9 +97,9 @@ void SBSwitch::newMessage(char *message) {
 /**
  * Send Message Data
  */
-void SBSwitch::sendMessageData(void) {
-	SBMessageDataReq msg(this->sbaddress, this->value, this->batteryLevel);
-	sbmessenger->send(&msg, sizeof(SBMessageDataReq));
+void SBBinaryStateSensor::sendMessageData(void) {
+	SBBinaryStateMessageDataReq msg(this);
+	sbmessenger->send(&msg, sizeof(SBBinaryStateMessageDataReq));
 	this->currentState = SBDevice::state::newvalue;
 	heartbeat_time = millis() + heartbeat_period;
 }

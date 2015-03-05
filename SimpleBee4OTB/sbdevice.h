@@ -13,8 +13,8 @@
  */
 #ifndef __SBDEVICE_H_
 #define __SBDEVICE_H_
-#include <sbdevicecom.h>
-#include <SBMessenger.h>
+#include "sbdevicecom.h"
+#include "SBMessenger.h"
 
 /**
  * Base class for Simple Bee Device
@@ -29,7 +29,7 @@ public:
 	unsigned long heartbeat_retry;  // heart_beat retry period in milliseconds
 	unsigned char batteryLevel=9;   // Must be 0 empty to 9 full
 
-	SBMessenger * sbmessenger;    // Message manager
+	SBMessenger * sbmessenger;      // Message manager
 
 	/**
 	 * State machine type
@@ -60,7 +60,7 @@ public:
 	void setAddr(const char * newAddress);
 
 	/**
-	 * Start device
+	 * Start device and so ask for an address
 	 */
 	virtual void start(void) {
 		this->currentState = SBDevice::state::started;
@@ -106,16 +106,16 @@ public:
  */
 
 /**
- * SimpleBee Led
+ * SimpleBee Binary State Actuator
  */
-class SBLed: public SBActuator {
+class SBBinaryStateActuator: public SBActuator {
 public:
 	char value; // 0 or 1
 
 	/**
 	 * Contructors
 	 */
-	SBLed(const char * moduleType="001", unsigned long hearbeat_period_ms=500) : SBActuator(moduleType, hearbeat_period_ms) {};
+	SBBinaryStateActuator(const char * moduleType="001" /* Led by default */ , unsigned long hearbeat_period_ms=500) : SBActuator(moduleType, hearbeat_period_ms) {};
 
 	/**
 	 * Send Heart Beat message
@@ -127,6 +127,16 @@ public:
 	 */
 	virtual void newMessage(char *message);
 };
+
+class SBLed: public SBBinaryStateActuator {
+public:
+	/**
+	 * Contructors
+	 */
+	SBLed(unsigned long hearbeat_period_ms=500) : SBBinaryStateActuator("001", hearbeat_period_ms) {};
+};
+
+
 
 
 
@@ -154,19 +164,17 @@ public:
 
 };
 
-
 /**
- * SimpleBee Switch
- * 2 state device = 0 and 1
+ * SimpleBee Binary State Sensor
  */
-class SBSwitch: public SBSensor {
+class SBBinaryStateSensor: public SBSensor {
 public:
 	char value; // 0 or 1
 
 	/**
 	 * Contructors
 	 */
-	SBSwitch(const char * moduleType="001", unsigned long hearbeat_period_ms=60000 /* 1 min */) : SBSensor(moduleType, hearbeat_period_ms) {};
+	SBBinaryStateSensor(const char * moduleType="002", unsigned long hearbeat_period_ms=60000 /* 1 min */) : SBSensor(moduleType, hearbeat_period_ms) {};
 
 	/**
 	 * Send Heart Beat message
@@ -182,6 +190,21 @@ public:
 	 * Send Message Data
 	 */
 	virtual void sendMessageData(void);
+
+};
+
+
+/**
+ * SimpleBee Switch
+ * 2 state device = 0 and 1
+ */
+class SBSwitch: public SBBinaryStateSensor {
+public:
+	/**
+	 * Contructors
+	 */
+	SBSwitch(const char * moduleType="002", unsigned long hearbeat_period_ms=60000 /* 1 min */) : SBBinaryStateSensor("002", hearbeat_period_ms) {};
+
 };
 
 #endif // __SBDEVICE_H_

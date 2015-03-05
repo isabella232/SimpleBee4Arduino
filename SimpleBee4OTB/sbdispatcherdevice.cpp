@@ -38,6 +38,7 @@ void SBDispatcherDevice::dispatch(char * msg, int len) {
 				if (SBDevice::state::ukn == (*device)->currentState) { // Search First One
 					SBMessageIdentificationResponse *identMsg = (SBMessageIdentificationResponse *) msg;
 					(*device)->setAddr(identMsg->address);
+					noIdentInProgress = true; // Authorize next ident
 					break;
 				}
 			}
@@ -67,11 +68,10 @@ void SBDispatcherDevice::dispatch(char * msg, int len) {
  */
 void SBDispatcherDevice::heartbeat(void) {
 	if (deviceList) {
-		bool noIdentInProgress = true;
 		unsigned long now = millis();
 		for (SBDevice **device=deviceList;*device;device++) { // check address on remaining devices
 			if (noIdentInProgress && SBDevice::state::started == (*device)->currentState) { // Ask ident for device
-				SBMessageIdentificationReq ident((*device)->deviceType, (*device)->moduleType);
+				SBMessageIdentificationReq ident(*device);
 				sbmessenger->send(&ident, sizeof(SBMessageIdentificationReq));
 				(*device)->currentState = SBDevice::state::ukn;
 				noIdentInProgress = false; // Only One in progress

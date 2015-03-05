@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-SimpleBee base driver
+SimpleBee base driver emulator
 (c) 2015 - Orange Labs Franck Roudet
 ------------------------------------------------------
 """
@@ -93,10 +93,7 @@ class PseudoDevice(Fysom):
         logger.debug('Module of type %s at address %s detected', self.typemodule, self.addr)
 
     def start(self):
-        if "0000" == self.addr:
-            self.evt_askident()
-        else:
-            self.evt_giveident()
+        self.evt_askident() if "0000" == self.addr else self.evt_giveident()
             
     
     def sendMsg(self,msg):
@@ -125,7 +122,19 @@ class PseudoDevice(Fysom):
         logger.info("\t %s", {key:getattr(self,key, None) for key in ["value", "batteryLevel"]})
 
 
-
+    @classmethod
+    def factory(cls, sensor,**kwargs):
+        logger.debug("Build that %s %s",sensor,kwargs)
+        if sensor=='C':
+            newSBDevice = SensorDevice(**kwargs)
+        elif kwargs["typemodule"]=='A002':
+            newSBDevice=SandTimerDevice(**kwargs)        
+        elif sensor=='A':
+            newSBDevice=ActuarorDevice(**kwargs)
+        else:
+            newSBDevice=None
+        return newSBDevice
+        
 
 
     def __del__(self):
@@ -150,6 +159,25 @@ class SensorDevice(PseudoDevice):
         self.evt_valueack()    
           
 
+class SandTimerDevice(ActuarorDevice):
+    
+    def __init__(self,*args,**kwargs):
+        self.led=6
+        super(SandTimerDevice, self).__init__(*args,**kwargs)
+            
+    def onafterevt_newvalue(self,e):
+        if self.value=='008': # reverse restart
+            self.led=6
+        elif self.value=='800': # flat wait
+            pass
+        elif self.value=='000': # up decrease
+            self.led = 0 if self.led==0 else self.led - 1
+        msg="%c%.4s%s" % (str(e.msgType).lower(),self.addr, self.led)
+        logger.info("-> send sand ack event %s", msg)
+        self.sendMsg(msg)
+        self.evt_valueack()    
+
+
 SBEndOfMessage='\r';
       
 SBMsgReqType = enum(identification='I', 
@@ -160,8 +188,6 @@ SBMsgReqType = enum(identification='I',
 Message Type. First Byte
 """
 
-
-print SBMsgReqType.identification
 
 class SimpleBee(object):
     list_liveObject = {}
@@ -192,17 +218,22 @@ class SimpleBee(object):
             elif msgType in [SBMsgReqType.request, SBMsgReqType.watchdog, SBMsgReqType.data]:
                 #(msgType, address, value, batdelimit, batteryLevel, cksum)  =struct.unpack('c4sccc2s', msg)
                 address=msg[1:5]
-                value=msg[5:-4]
-                batteryLevel=msg[-3:-2]
+                value=msg[5:-8]
+                batteryLevel=msg[-7:-6]
+                sensor=msg[-6:-5]
+                typemodule=msg[-5:-2]
                 cksum=msg[-2:]
                 if checkMsgChecksum(msg):
                     device=self.list_liveObject.get(address, None)
                     if not device:
-                        logger.error("  ->Unknown device %s", address)
-                    else:
-                        device.value=value
-                        device.batteryLevel=batteryLevel
-                        device.evt_newvalue(msgType=msgType)
+                        logger.error("  ->Unknown device %s auto provide", address)
+                        device = PseudoDevice.factory(sensor, addr=str(address), typemodule=sensor+typemodule, ser=self.ser)
+                        #device = SensorDevice(addr=str(address), typemodule=sensor+typemodule, ser=self.ser) if sensor=='C' else ActuarorDevice(addr=address, typemodule=sensor+typemodule, ser=self.ser)
+                        device.start()
+                        self.list_liveObject[device.addr]=device
+                    device.value=value
+                    device.batteryLevel=batteryLevel
+                    device.evt_newvalue(msgType=msgType)
             elif msgType == '-':
                 logger.warning("%s", msg)
             else:

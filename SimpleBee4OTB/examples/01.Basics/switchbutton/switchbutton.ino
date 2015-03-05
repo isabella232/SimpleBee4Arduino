@@ -6,17 +6,17 @@
  * or at 'http://www.apache.org/licenses/LICENSE-2.0'.
  */
 
-/* LED example
+/* Switch button example
  *
  * Version:     0.1.0
- * Created:     2015-02-25 by Franck Roudet
+ * Created:     2015-03-02 by Franck Roudet
  */
 #include <SBMessenger.h>
 #include <sbmessage.h>
 #include <sbdevice.h>
 #include <sbdispatcherdevice.h>
 
-#include "LedPinout.h"
+#include "SwitchPinout.h"
 
 
 /**
@@ -35,16 +35,20 @@ SBMessenger sbmessenger(Serial,SBEndOfMessage, &disp, SBCheckSum);
 /**
  * Declare my devices
  */
-const char * const ledType="001";
-MyLed led1(13);               // led1 on pin13 - default heart type
-MyLed led2(12, 3000);         // led2 on pin12 - 3sec
+const char * const switchType="002";
+MySwitch switch1(11);               // switch1 on pin11 - default heart type
+MySwitch  switch2(10, 120000);      // switch2 on pin10 - 2 min en milli secondes
 
 /**
  * List of monitoring devices
  */
-SBDevice * stbDeviceList[]={ &led1, &led2, NULL }; // WARNING: must ends with NULL
+SBDevice * stbDeviceList[]={ &switch1, &switch2, NULL }; // WARNING: must ends with NULL
 
 
+/**
+ * Sensor list for checking Hardware;
+ */ 
+MySwitch * stbDeviceHardwareList[]={ &switch1, &switch2, NULL }; // WARNING: must ends with NULL
 
 void setup() {
   // Start the serial port
@@ -64,16 +68,10 @@ void setup() {
   //for (SBDevice **device=stbDeviceList;*device;device++) {
   //  (*device)->start();
   //}
-  
-  // set address
-  led1.setAddr("0101");
-  led2.setAddr("0102");
-  
-  led1.value=1;
-  led1.batteryLevel=5;
-  led2.value=2;
-  led2.batteryLevel=9;
 
+  // set address
+  switch1.setAddr("2001");
+  switch2.setAddr("2002");
 }
 
 
@@ -81,5 +79,9 @@ void loop() {
   // Looks for incoming message
   sbmessenger.monitor();
 
+  // Check for Hardware changes
+  for (MySwitch **device=stbDeviceHardwareList;*device;device++) {
+    (*device)->checkChange();
+  }
 }
 

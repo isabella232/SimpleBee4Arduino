@@ -2,7 +2,7 @@
 configuration XBee
 ==================
 
-Configuration des modules XBee pour une utilisation sur |OTBlogo| avec le protocole JPL.
+Configuration des modules XBee pour une utilisation sur |OTBlogo| avec le protocole SimpleBee.
 
 .. |OTBlogo| image:: http://openthebox.org/wp-content/uploads/2014/06/OB-Logo.png
 

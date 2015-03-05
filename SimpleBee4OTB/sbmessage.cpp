@@ -13,7 +13,7 @@
  */
 
 #include "sbmessage.h"
-
+#include "sbdevice.h"
 /*
  * Calc checksum and store in dest.
  * dest size is 2
@@ -27,4 +27,40 @@ void SBCheckSum(const char * start, int length, char * dest) {
 	dest[0] = ((csum & 0xF0) >> 4) + '0';
 	dest[1] = (csum & 0x0F)        + '0';
 }
+
+SBMessageIdentificationReq::SBMessageIdentificationReq(const SBDevice * const device): SBMessageIdentificationReq(device->moduleType) {
+	this->deviceType=device->deviceType;
+}
+
+
+
+/**
+ * Actuator
+ */
+
+SBBinaryStateMessageRequestReq::SBBinaryStateMessageRequestReq(const SBBinaryStateActuator * const device) :
+		SBBinaryStateMessageRequestReq(device->sbaddress, device->value, device->batteryLevel) {
+	memcpy(this->moduleType, device->moduleType, MODULE_TYPE_SIZEOF);
+};
+
+
+/**
+ * Sensor
+ */
+SBBinaryStateBaseMessageReq::SBBinaryStateBaseMessageReq(const char messageType, const SBBinaryStateSensor * const device): SBMessage(messageType) {
+	this->batterylevel= '0' + (device->batteryLevel % 10);
+	this->value= '0' + device->value;
+	memcpy(this->sbaddress,  device->sbaddress,  ADR_TYPE_SIZEOF);
+	memcpy(this->moduleType, device->moduleType, MODULE_TYPE_SIZEOF);
+}
+
+SBBinaryStateMessageWatchdogReq::SBBinaryStateMessageWatchdogReq(const SBBinaryStateSensor * const device):SBBinaryStateBaseMessageReq(SBMsgReqType::watchdog,device) {
+}
+
+SBBinaryStateMessageDataReq::SBBinaryStateMessageDataReq(const SBBinaryStateSensor * const device):SBBinaryStateBaseMessageReq(SBMsgReqType::data,device) {
+}
+
+/**
+ * Switch message
+ */
 

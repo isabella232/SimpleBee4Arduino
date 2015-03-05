@@ -23,7 +23,7 @@
 class SBDispatcherDevice : public SBDispatcherBase {
 private:
 	SBDevice ** deviceList=0L;       // Device List must end with NULL
-
+	bool noIdentInProgress=true;     // only one ident in progress
 public:
 	// ****** Public functions ******
 	/**
