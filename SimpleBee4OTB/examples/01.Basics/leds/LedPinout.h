@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 2015 Orange
+ *
+ * This software is distributed under the terms and conditions of the 'Apache-2.0'
+ * license which can be found in the file 'LICENSE.txt' in this package distribution
+ * or at 'http://www.apache.org/licenses/LICENSE-2.0'.
+ */
+ 
 /**
  * Override Led to process events
  */
@@ -11,7 +19,7 @@ public:
       pinMode(pin, OUTPUT);
   };
   /**
-   * Init comm and hardware
+   * Init comm and hardware when address is requested
    */
   virtual void start(void) {
     SBLed::start();
@@ -19,7 +27,7 @@ public:
   };
    
   /**
-   * Init comm and hardware
+   * Init comm and hardware when address is knwown by device
    */
   virtual void setAddr(const char * newAddress) {
     SBLed::setAddr(newAddress);

@@ -195,6 +195,19 @@ public:
 
 
 /**
+ * SimpleBee Push button
+ * 2 state device = 0 and 1
+ */
+class SBPush: public SBBinaryStateSensor {
+public:
+	/**
+	 * Contructors
+	 */
+	SBPush(unsigned long hearbeat_period_ms=60000 /* 1 min */) : SBBinaryStateSensor("001", hearbeat_period_ms) {};
+
+};
+
+/**
  * SimpleBee Switch
  * 2 state device = 0 and 1
  */
@@ -203,7 +216,7 @@ public:
 	/**
 	 * Contructors
 	 */
-	SBSwitch(const char * moduleType="002", unsigned long hearbeat_period_ms=60000 /* 1 min */) : SBBinaryStateSensor("002", hearbeat_period_ms) {};
+	SBSwitch(unsigned long hearbeat_period_ms=60000 /* 1 min */) : SBBinaryStateSensor("002", hearbeat_period_ms) {};
 
 };
 

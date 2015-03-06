@@ -17,6 +17,7 @@
 #include <sbdispatcherdevice.h>
 
 #include "SwitchPinout.h"
+#include "PushPinout.h"
 
 
 /**
@@ -35,20 +36,20 @@ SBMessenger sbmessenger(Serial,SBEndOfMessage, &disp, SBCheckSum);
 /**
  * Declare my devices
  */
-const char * const switchType="002";
-MySwitch switch1(11);               // switch1 on pin11 - default heart type
-MySwitch  switch2(10, 120000);      // switch2 on pin10 - 2 min en milli secondes
+MySwitch  switch1(11);          // switch1 on pin11 - default heart type
+MySwitch  switch2(10, 120000);  // switch2 on pin10 - 2 min en milli secondes
+MyPush    push1(9);             // push1 on pin9 - default heart type
 
 /**
  * List of monitoring devices
  */
-SBDevice * stbDeviceList[]={ &switch1, &switch2, NULL }; // WARNING: must ends with NULL
+SBDevice * stbDeviceList[]={ &switch1, &switch2, &push1, NULL }; // WARNING: must ends with NULL
 
 
 /**
  * Sensor list for checking Hardware;
  */ 
-MySwitch * stbDeviceHardwareList[]={ &switch1, &switch2, NULL }; // WARNING: must ends with NULL
+CheckChangeMixin * stbDeviceHardwareList[]={ &switch1, &switch2, &push1, NULL }; // WARNING: must ends with NULL
 
 void setup() {
   // Start the serial port
@@ -72,6 +73,7 @@ void setup() {
   // set address
   switch1.setAddr("2001");
   switch2.setAddr("2002");
+  push1.setAddr("1001");
 }
 
 
@@ -80,7 +82,7 @@ void loop() {
   sbmessenger.monitor();
 
   // Check for Hardware changes
-  for (MySwitch **device=stbDeviceHardwareList;*device;device++) {
+  for (CheckChangeMixin **device=stbDeviceHardwareList;*device;device++) {
     (*device)->checkChange();
   }
 }
