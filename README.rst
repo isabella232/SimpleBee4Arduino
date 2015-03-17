@@ -15,14 +15,18 @@ Références
 ----------
    * Arduino http://www.arduino.cc
    * `Arduino guide pour Xbee Shield`_
-   * The Simple Bee for OpenTheBox library : `SimpleBee4OTB Release`_
+   * The Simple Bee for OpenTheBox library : `SimpleBee4Arduino Release`_
    * The Simple Bee genereric message manager library : `SimpleBeeMessenger Release`_
    * `Xbee et Arduino , un tutorial <http://jeromeabel.net/ressources/xbee-arduino>`_
    
-.. _`SimpleBee4OTB Release`: https://github.com/Orange-OpenSource/SimpleBee4OTB/releases/latest
+.. _`SimpleBee4Arduino Release`: https://github.com/Orange-OpenSource/SimpleBee4Arduino/releases/latest
 .. _`SimpleBeeMessenger Release`: https://github.com/Orange-OpenSource/SimpleBeeMessenger/releases/latest
+
+.. _`SimpleBee4Arduino`: https://github.com/Orange-OpenSource/SimpleBee4Arduino
+.. _`SimpleBeeMessenger`: https://github.com/Orange-OpenSource/SimpleBeeMessenger
 .. _`Arduino guide pour Xbee Shield`: http://arduino.cc/en/Guide/ArduinoWirelessShield
 .. _`bibliothèque XBee pour Arduino`: https://code.google.com/p/xbee-arduino/
+.. _`Open The Box`: http://www.openthebox.org
 
 Requirements
 ------------
@@ -32,20 +36,27 @@ Requirements
    * XBee S1 digi module http://www.digi.com/products/wireless-wired-embedded-solutions/zigbee-rf-modules/xctu
    * `Open The Box`_
 
+
 Installation
 ------------
 
-Download the latest version of the library https://github.com/Orange-OpenSource/SimpleBeeMessenger/releases.
+.. _`Detailed installation (html)`: ./InstallationArduinoEtLibSimpleBee.html
+.. _`Detailed installation (rst)`: /doc/InstallationArduinoEtLibSimpleBee.rst
 
-In Arduino IDE, go to sketch > Import library > add library and select the downloaded zip file.
+See also: `Detailed installation (html)`_/`Detailed installation (rst)`_.
 
-In sketch > Import library, you got now **SBMessenger** library.
 
-Download the latest version of the library https://github.com/Orange-OpenSource/SimpleBee4OTB/releases.
+Download the latest version of the library (zip file) https://github.com/Orange-OpenSource/SimpleBeeMessenger/releases.
 
-In Arduino IDE, go to sketch > Import library > add library and select the downloaded zip file.
+In Arduino IDE, go to sketch **>** Import library **>** add library and select the downloaded zip file.
 
-In sketch > Import library, you got now **SimpleBee4OTB** library.
+In sketch **>** Import library, you got now **SBMessenger** library.
+
+Download the latest version of the library (zip file) https://github.com/Orange-OpenSource/SimpleBee4Arduino/releases.
+
+In Arduino IDE, go to sketch **>** Import library **>** add library and select the downloaded zip file.
+
+In sketch **>** Import library, you got now **SimpleBee4Arduino** library.
 
 
 License

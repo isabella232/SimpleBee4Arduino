@@ -13,10 +13,10 @@ Références
    * explications détaillés pour en savoir plus en français de la configuration : http://mchobby.be/wiki/index.php?title=Arduino_Wireless_Shield_XBee_802.15.4
 
 
-.. _`SimpleBee4OTB Release`: https://github.com/Orange-OpenSource/SimpleBee4OTB/releases/latest
+.. _`SimpleBee4Arduino Release`: https://github.com/Orange-OpenSource/SimpleBee4Arduino/releases/latest
 .. _`SimpleBeeMessenger Release`: https://github.com/Orange-OpenSource/SimpleBeeMessenger/releases/latest
 
-.. _`SimpleBee4OTB`: https://github.com/Orange-OpenSource/SimpleBee4OTB
+.. _`SimpleBee4Arduino`: https://github.com/Orange-OpenSource/SimpleBee4Arduino
 .. _`SimpleBeeMessenger`: https://github.com/Orange-OpenSource/SimpleBeeMessenger
    
 Requirements

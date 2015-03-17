@@ -1,8 +1,8 @@
-=========================================
-Installation Arduino et Lib SimpleBee4OTB
-=========================================
+=============================================
+Installation Arduino et Lib SimpleBee4Arduino
+=============================================
 
-Configuration de l'IDE |Arduinologo| avec pour l'utilisation du kit SimpleBee4OTB.
+Configuration de l'IDE |Arduinologo| avec pour l'utilisation du kit SimpleBee4Arduino.
 
 .. |OTBlogo| image:: http://openthebox.org/wp-content/uploads/2014/06/OB-Logo.png
 .. |Arduinologo| image:: http://upload.wikimedia.org/wikipedia/commons/4/42/Arduino_Uno_logo.png
@@ -11,14 +11,17 @@ Configuration de l'IDE |Arduinologo| avec pour l'utilisation du kit SimpleBee4OT
 Références
 ----------
    * Le site arduino |Arduinologo| http://www.arduino.cc
-   * La `bibliothèque XBee pour Arduino`_
    * `Arduino guide pour Xbee Shield`_
-   * La bilibithèque Simple Bee pour OpenTheBox : `SimpleBee4OTB Release`_
+   * La bibliothèque Simple Bee pour OpenTheBox : `SimpleBee4Arduino Release`_
    * `Xbee et Arduino , un tutorial <http://jeromeabel.net/ressources/xbee-arduino>`_
    
-.. _`SimpleBee4OTB Release`: https://github.com/franckOL/XbeeTuto/releases/latest
 .. _`Arduino guide pour Xbee Shield`: http://arduino.cc/en/Guide/ArduinoWirelessShield
-.. _`bibliothèque XBee pour Arduino`: https://code.google.com/p/xbee-arduino/
+
+.. _`SimpleBee4Arduino Release`: https://github.com/Orange-OpenSource/SimpleBee4Arduino/releases/latest
+.. _`SimpleBeeMessenger Release`: https://github.com/Orange-OpenSource/SimpleBeeMessenger/releases/latest
+
+.. _`SimpleBee4Arduino`: https://github.com/Orange-OpenSource/SimpleBee4Arduino
+.. _`SimpleBeeMessenger`: https://github.com/Orange-OpenSource/SimpleBeeMessenger
 
 Requirements
 ------------
@@ -45,20 +48,23 @@ Et lancer l'IDE:
 
 .. |arduinoblink| image::http://arduino.cc/en/uploads/Guide/Arduino1Blink.png 
 
-Téléchargement et installation de la biliothèque XBee
------------------------------------------------------
-
-Aller sur le site de `bibliothèque XBee pour Arduino`_ et télécharge la dernière version (0.5 et +)
-
-Dans l'IDE, aller dans croquis > Importer bibliothèque > Ajouter bibliothèque et selectionner le .zip téléchargé.
-
-Dans croquis > Importer bibliothèque, vous avez maintenant la bibliothèque XBee et dans fichier > exemples > XBee, vous avez des exemples XBee.
 
 
-Téléchargement et installation de la biliothèque SimpleBee4OTB
---------------------------------------------------------------
+Téléchargement et installation de la bibliothèque SimpleBee4Arduino
+-------------------------------------------------------------------
 
-NYI
+Télécharger la dernière version de la bibliothèque SimpleBeeMessenger (zip file) https://github.com/Orange-OpenSource/SimpleBeeMessenger/releases.
+
+Dans l'IDE Arduino IDE, aller à croquis **>** Importer bibliothèque **>** ajouter bibliothèque et sélectionner le fichier zip téléchargé.
+
+Dans croquis **>** Importer bibliothèque, vous avez maintenant la bibliothèque **SBMessenger**.
+
+Télécharger la derniètre version de la bibliothèque SimpleBee4Arduino (zip file) https://github.com/Orange-OpenSource/SimpleBee4Arduino/releases.
+
+Dans l'IDE Arduino IDE, aller à croquis **>** Importer bibliothèque **>** ajouter bibliothèque et sélectionner le fichier zip téléchargé.
+
+Dans croquis **>** Importer bibliothèque, vous avez maintenant la bibliothèque **SimpleBee4Arduino**.
+
 
 
 Hello Word ?
