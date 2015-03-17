@@ -23,6 +23,9 @@ Références
 .. _`SimpleBee4Arduino`: https://github.com/Orange-OpenSource/SimpleBee4Arduino
 .. _`SimpleBeeMessenger`: https://github.com/Orange-OpenSource/SimpleBeeMessenger
 
+
+.. |arduinoblink| image::http://arduino.cc/en/uploads/Guide/Arduino1Blink.png 
+
 Requirements
 ------------
 * |Arduinologo| IDE Arduino 1.6
@@ -45,8 +48,6 @@ Installer selon l'OS:
 Et lancer l'IDE:
 
 |arduinoblink|
-
-.. |arduinoblink| image::http://arduino.cc/en/uploads/Guide/Arduino1Blink.png 
 
 
 
