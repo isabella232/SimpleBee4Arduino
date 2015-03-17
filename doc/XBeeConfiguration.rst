@@ -4,13 +4,13 @@ configuration XBee
 
 Configuration des modules XBee pour une utilisation sur |OTBlogo| avec le protocole SimpleBee.
 
-On suppose que l'on utiliser une carte Arduino Uno + Arduino Wireless Proto Shield + 1 XBee S1 autant pour faire les montages prototypes que pour le dongle coté Raspberry pi (OpenTheBox).
+On suppose que l'on utilise une carte Arduino Uno + Arduino Wireless Proto Shield + 1 XBee S1 autant pour faire les montages prototypes que pour le dongle coté Raspberry pi (OpenTheBox).
 
 .. |OTBlogo| image:: http://openthebox.org/wp-content/uploads/2014/06/OB-Logo.png
 
 Références
 ----------
-   * explications détaillés pour en savoir plus en français de la configuration : http://mchobby.be/wiki/index.php?title=Arduino_Wireless_Shield_XBee_802.15.4
+* explications détaillés pour en savoir plus en français de la configuration : http://mchobby.be/wiki/index.php?title=Arduino_Wireless_Shield_XBee_802.15.4
 
 
 .. _`SimpleBee4Arduino Release`: https://github.com/Orange-OpenSource/SimpleBee4Arduino/releases/latest
@@ -21,11 +21,11 @@ Références
    
 Requirements
 ------------
-   * |OTBlogo| http://openthebox.org
-   * Arduino Uno
-   * Arduino Wireless Proto Shield
-   * XBee S1 de digi http://www.digi.com/products/wireless-wired-embedded-solutions/zigbee-rf-modules/xctu
-   * XCTU Logiciel pour configurer les modules xbee (facultatif, pour vérifier la configuration)
+* |OTBlogo| http://openthebox.org
+* Arduino Uno
+* Arduino Wireless Proto Shield
+* XBee S1 de digi http://www.digi.com/products/wireless-wired-embedded-solutions/zigbee-rf-modules/xctu
+* XCTU Logiciel pour configurer les modules xbee (facultatif, pour vérifier la configuration)
 
    
 Configurer le module Xbee
@@ -38,7 +38,7 @@ Pour fonctionner les modules doivent être sur le même **canal** et sur le mêm
 Configurer module maître
 ------------------------
 
-Pour le maître, il faut un sketch vide sur le microcontrolleur: (**enlever le module XBee pour téléverser le sketch**)
+Pour le maître, il faut un sketch vide sur le microcontrolleur: (**retirer le module XBee de la carte pour téléverser le sketch**)
 
 .. code-block:: c
 

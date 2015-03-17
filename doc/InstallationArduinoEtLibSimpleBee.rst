@@ -10,10 +10,10 @@ Configuration de l'IDE |Arduinologo| avec pour l'utilisation du kit SimpleBee4Ar
 
 Références
 ----------
-   * Le site arduino |Arduinologo| http://www.arduino.cc
-   * `Arduino guide pour Xbee Shield`_
-   * La bibliothèque Simple Bee pour OpenTheBox : `SimpleBee4Arduino Release`_
-   * `Xbee et Arduino , un tutorial <http://jeromeabel.net/ressources/xbee-arduino>`_
+* Le site arduino |Arduinologo| http://www.arduino.cc
+* `Arduino guide pour Xbee Shield`_
+* La bibliothèque Simple Bee pour OpenTheBox : `SimpleBee4Arduino Release`_
+* `Xbee et Arduino , un tutorial <http://jeromeabel.net/ressources/xbee-arduino>`_
    
 .. _`Arduino guide pour Xbee Shield`: http://arduino.cc/en/Guide/ArduinoWirelessShield
 
@@ -25,10 +25,10 @@ Références
 
 Requirements
 ------------
-   * |Arduinologo| IDE Arduino 1.6
-   * une carte Arduino_ Uno
-   * Arduino Wireless Proto Shield
-   * un module XBee S1 de digi http://www.digi.com/products/wireless-wired-embedded-solutions/zigbee-rf-modules/xctu
+* |Arduinologo| IDE Arduino 1.6
+* une carte Arduino_ Uno
+* Arduino Wireless Proto Shield
+* un module XBee S1 de digi http://www.digi.com/products/wireless-wired-embedded-solutions/zigbee-rf-modules/xctu
 
    
 Téléchargement et installation de |Arduinologo| IDE
@@ -37,9 +37,9 @@ Téléchargement et installation de |Arduinologo| IDE
 Aller sur le site de Arduino_ et télécharge la dernière version en fonction de votre OS.
 
 Installer selon l'OS:
-   * `Windows <http://arduino.cc/en/Guide/Windows>`_
-   * `Mac OS X <http://arduino.cc/en/Guide/MacOSX>`_
-   * `Linux (on the playground wiki) <http://www.arduino.cc/playground/Learning/Linux>`_
+* `Windows <http://arduino.cc/en/Guide/Windows>`_
+* `Mac OS X <http://arduino.cc/en/Guide/MacOSX>`_
+* `Linux (on the playground wiki) <http://www.arduino.cc/playground/Learning/Linux>`_
 
 
 Et lancer l'IDE:
@@ -66,20 +66,4 @@ Dans l'IDE Arduino IDE, aller à croquis **>** Importer bibliothèque **>** ajou
 Dans croquis **>** Importer bibliothèque, vous avez maintenant la bibliothèque **SimpleBee4Arduino**.
 
 
-
-Hello Word ?
-------------
-
-NYI 
-
-.. code-block:: c
-
-   /** Sketch pour le maître
-    * A flasher en enlevant le module XBee.
-    **/
-   void setup() {
-   }
-   
-   void loop() {
-   }
    
