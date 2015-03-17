@@ -37,9 +37,9 @@ Téléchargement et installation de |Arduinologo| IDE
 Aller sur le site de Arduino_ et télécharge la dernière version en fonction de votre OS.
 
 Installer selon l'OS:
-* `Windows <http://arduino.cc/en/Guide/Windows>`_
-* `Mac OS X <http://arduino.cc/en/Guide/MacOSX>`_
-* `Linux (on the playground wiki) <http://www.arduino.cc/playground/Learning/Linux>`_
+ * `Windows <http://arduino.cc/en/Guide/Windows>`_
+ * `Mac OS X <http://arduino.cc/en/Guide/MacOSX>`_
+ * `Linux (on the playground wiki) <http://www.arduino.cc/playground/Learning/Linux>`_
 
 
 Et lancer l'IDE:
