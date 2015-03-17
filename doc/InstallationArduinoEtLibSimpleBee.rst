@@ -6,6 +6,7 @@ Configuration de l'IDE |Arduinologo| avec pour l'utilisation du kit SimpleBee4Ar
 
 .. |OTBlogo| image:: http://openthebox.org/wp-content/uploads/2014/06/OB-Logo.png
 .. |Arduinologo| image:: http://upload.wikimedia.org/wikipedia/commons/4/42/Arduino_Uno_logo.png
+.. |arduinoblink| image:: http://arduino.cc/en/uploads/Guide/Arduino1Blink.png 
 .. _Arduino: http://www.arduino.cc/
 
 Références
@@ -24,7 +25,6 @@ Références
 .. _`SimpleBeeMessenger`: https://github.com/Orange-OpenSource/SimpleBeeMessenger
 
 
-.. |arduinoblink| image::http://arduino.cc/en/uploads/Guide/Arduino1Blink.png 
 
 Requirements
 ------------
