@@ -13,11 +13,11 @@ Library for |Arduinologo| device implementing SimpleBee protocole for |OTBlogo| 
 
 Références
 ----------
- * Arduino http://www.arduino.cc
- * `Arduino guide pour Xbee Shield`_
- * The Simple Bee for OpenTheBox library : `SimpleBee4Arduino Release`_
- * The Simple Bee genereric message manager library : `SimpleBeeMessenger Release`_
- * `Xbee et Arduino , un tutorial <http://jeromeabel.net/ressources/xbee-arduino>`_
+* Arduino http://www.arduino.cc
+* `Arduino guide pour Xbee Shield`_
+* The Simple Bee for OpenTheBox library : `SimpleBee4Arduino Release`_
+* The Simple Bee genereric message manager library : `SimpleBeeMessenger Release`_
+* `Xbee et Arduino , un tutorial <http://jeromeabel.net/ressources/xbee-arduino>`_
    
 .. _`SimpleBee4Arduino Release`: https://github.com/Orange-OpenSource/SimpleBee4Arduino/releases/latest
 .. _`SimpleBeeMessenger Release`: https://github.com/Orange-OpenSource/SimpleBeeMessenger/releases/latest
