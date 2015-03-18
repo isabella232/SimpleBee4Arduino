@@ -29,7 +29,7 @@ Montage électronique
 
 .. image:: ./hardware/2Leds_bb.png
 
-   les Pin 13 et 12 sont branchées chacune sur une led.
+les Pin 13 et 12 sont branchées chacune sur une led.
    
 Code Arduino
 ------------
