@@ -32,7 +32,6 @@ SBMessenger sbmessenger(Serial,SBEndOfMessage, &disp, SBCheckSum);
 
 
 
-
 /**
  * Declare my devices
  */
@@ -50,11 +49,9 @@ SBDevice * stbDeviceList[]={ &led1, &led2, NULL }; // WARNING: must ends with NU
 void setup() {
   // Start the serial port
   Serial.begin(57600);
-
   
   // Set list of device for dispatching
   disp.setDeviceList(stbDeviceList);
-
 
   //Serial.print("-starting\r");
 
@@ -66,7 +63,7 @@ void setup() {
   //  (*device)->start();
   //}
   
-  // set address
+  // set addresses
   led1.setAddr("0101");
   led2.setAddr("0102");
   

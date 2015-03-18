@@ -21,7 +21,7 @@ Requirements
 * Arduino IDE > 1.6
 * Arduino Uno
 * Arduino Wireless Proto Shield
-* XBee S1 de digi http://www.digi.com/products/wireless-wired-embedded-solutions/zigbee-rf-modules/xctu
+* XBee S1 de digi
 * Bibliothèques `SimpleBeeMessenger`_ et `SimpleBee4Arduino`_
 
 Montage électronique
@@ -37,17 +37,17 @@ Code Arduino
 la totalité du code pour ce tutoriel se trouve ici:
 
 .. image:: ./images/exampletutoled.png
-   :scale: 50%
+
 
 Attention lors du téléversement:
  * Si on est en mode simulation, cf ci dessous, bien prendre garde de téléverser vers la **bonne carte arduino**. A choisir dans le menu **outils > port**.
- * Qd on téléverse, **il faut retirer le module XBee de son support**, à défaut on risque de reprogrammer les autres arduino sur le même canal et le même PANID.
+ * Quand on téléverse, **il faut retirer le module XBee de son support**, à défaut on risque de reprogrammer les autres arduino sur le même canal et le même PANID.
 
 
 
 Définition des leds (fichier ledPinout.h)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Ici il s'agit de réaliser le comportement que l'on souhaite de notre dispositif électronique en accords avec les actions de la plateforme OpenTheBox.
+Ici il s'agit de réaliser le comportement que l'on souhaite de notre dispositif électronique en accord avec les actions de la plateforme OpenTheBox.
 
 Quand un message arrive de OpenTheBox, la méthode **newMessage** est appelée avec le message entrant, c'est ici qu'il faut faire son action (allumé, éteindre...).
 
@@ -146,12 +146,8 @@ C'est le programme principal, qui consiste essentiellement à configurer l'ensem
      // Start the serial port
      Serial.begin(57600);
    
-     
      // Set list of device for dispatching
      disp.setDeviceList(stbDeviceList);
-   
-   
-     //Serial.print("-starting\r");
    
      delay(500); // Waiting radio
      
@@ -161,7 +157,7 @@ C'est le programme principal, qui consiste essentiellement à configurer l'ensem
      //  (*device)->start();
      //}
      
-     // set address
+     // set addresses
      led1.setAddr("0101");
      led2.setAddr("0102");
      
@@ -191,25 +187,26 @@ Pour tester sans OpenTheBox
 
 Vous devez avoir **Python 2.X** installé, et **pip**.
 
-Puis installer fysom:
+Puis installer fysom et pyserial:
 
 .. code-block:: bash
 
-   pip install fyson
+   pip install fysom
+   pip install pyserial
 
 Brancher le dongle/montage arduino maître sur le PC.
 
 Utiliser le simulateur python **simplebee.py** OpenTheBox qui de trouve https://github.com/Orange-OpenSource/SimpleBee4Arduino/tree/master/tools
 
-Avant d'utiliser le simulateur, il faut identifier le port sur lequel est branché le dongle/montage arduino maître (celà dépends de  l'OS).
+Avant d'utiliser le simulateur, il faut identifier le port sur lequel est branché le dongle/montage arduino maître (celà dépends de l'OS - COMX ou /dev/ttyACMX).
 
 Lancer le simulateur, par exemple sur linux:
 
 .. code-block:: bash
 
-   $python simplebee.py --debug --baudrate 57600 --port /dev/ttyACM0
+   $python simplebee.py --debug --baudrate 57600 --port COM6
    2015-03-18 11:11:56,563 - DEBUG simplebee - debug is on
-   2015-03-18 11:11:56,564 - DEBUG simplebee - Reading on /dev/ttyACM0
+   2015-03-18 11:11:56,564 - DEBUG simplebee - Reading on COM6
    2015-03-18 11:34:31,740 - ERROR simplebee -   ->Unknown device 0102 auto provide
    2015-03-18 11:34:31,740 - DEBUG simplebee - Build that A {'typemodule': u'A001', 'addr': '0102', 'ser': Serial<id=0x7fd07322ea50, open=True>(port='/dev/ttyACM0', baudrate=57600, bytesize=8, parity='N', stopbits=1, timeout=None, xonxoff=False, rtscts=False, dsrdtr=False)}
    2015-03-18 11:34:31,740 - DEBUG simplebee - PseudoDevice {'typemodule': u'A001', 'addr': '0102', 'ser': Serial<id=0x7fd07322ea50, open=True>(port='/dev/ttyACM0', baudrate=57600, bytesize=8, parity='N', stopbits=1, timeout=None, xonxoff=False, rtscts=False, dsrdtr=False)}

@@ -54,11 +54,9 @@ CheckChangeMixin * stbDeviceHardwareList[]={ &switch1, &switch2, &push1, NULL };
 void setup() {
   // Start the serial port
   Serial.begin(57600);
-
   
   // Set list of device for dispatching
   disp.setDeviceList(stbDeviceList);
-
 
   //Serial.print("-starting\r");
 
@@ -70,7 +68,7 @@ void setup() {
   //  (*device)->start();
   //}
 
-  // set address
+  // set addresses
   switch1.setAddr("2001");
   switch2.setAddr("2002");
   push1.setAddr("1001");

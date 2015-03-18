@@ -6,7 +6,7 @@ Library for |Arduinologo| device implementing SimpleBee protocole for |OTBlogo| 
         
         
 .. |OTBlogo| image:: http://openthebox.org/wp-content/uploads/2014/06/OB-Logo.png
-.. |Open The Box| image:: http://openthebox.org/
+
 .. |Arduinologo| image:: http://upload.wikimedia.org/wikipedia/commons/4/42/Arduino_Uno_logo.png
 .. _Arduino: http://www.arduino.cc/
 
@@ -33,7 +33,7 @@ Requirements
 * IDE Arduino 1.6
 * Arduino_ Uno
 * Arduino Wireless Proto Shield
-* XBee S1 digi module http://www.digi.com/products/wireless-wired-embedded-solutions/zigbee-rf-modules/xctu
+* XBee S1 digi module
 * `Open The Box`_
 
 
