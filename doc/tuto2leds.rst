@@ -231,10 +231,10 @@ Lancer le simulateur, par exemple sur linux:
    2015-03-18 11:34:31,743 - INFO simplebee - -> send actuator ack event r01012
    
 Le simulateur permet:
-* de voir les messages des devices sur le canal/PANID configuré
-* de répondre au messages des devices
-* Les leds clignotent au rythme du hearbeat (par défaut 500 ms)
-* d'émettre les acquittements des messages des buttons et interupteurs
+ * de voir les messages des devices sur le canal/PANID configuré
+ * de répondre au messages des devices
+ * Les leds clignotent au rythme du hearbeat (par défaut 500 ms)
+ * d'émettre les acquittements des messages des buttons et interupteurs
 
 
 
