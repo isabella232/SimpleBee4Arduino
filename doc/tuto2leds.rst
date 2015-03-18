@@ -24,11 +24,10 @@ Requirements
 * XBee S1 de digi http://www.digi.com/products/wireless-wired-embedded-solutions/zigbee-rf-modules/xctu
 * Bibliothèques `SimpleBeeMessenger`_ et `SimpleBee4Arduino`_
 
-Montage éléctronique
+Montage électronique
 --------------------
 
 .. image:: ./hardware/2Leds_bb.png
-   :scale: 50%
 
    les Pin 13 et 12 sont branchées chacune sur une led.
    
