@@ -57,7 +57,7 @@ void SBBinaryStateActuator::sendHeartBeat(void) {
  */
 void SBBinaryStateActuator::newMessage(char *message) {
 	SBMessageRequestResponse *rep=(SBMessageRequestResponse*)message;
-	value = (rep->value - '0') % 2;
+	value = (rep->value - '0') % 2; // Force status to be 0 or 1
 	this->currentState = SBDevice::state::identified;
 	heartbeat_time = millis() + heartbeat_period;
 }

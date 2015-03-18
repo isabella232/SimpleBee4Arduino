@@ -9,7 +9,7 @@
 /**
  * Override Led to process events
  */
-class MyLed : public SBLed {
+class MyLed : public SBLed { // A lots of things is already do by SBLed class : ie message analysis
 public:
   int pin;
   /**
@@ -39,7 +39,7 @@ public:
    * on change from OTB
    */
   virtual void newMessage(char *message) {
-    SBLed::newMessage(message);
+    SBLed::newMessage(message); // Message analysis that set le value member
     digitalWrite(pin,value);
   };
 };
