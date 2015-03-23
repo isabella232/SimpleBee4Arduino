@@ -11,7 +11,7 @@
 
 
 Tutoriaux
----------
+~~~~~~~~~
 * Installation IDE Arduino et des bibliothèques Arduino `installation détaillée (html)`_/`installation détaillée (rst)`_
 * Configuration des modules XBee `configuration module XBee (html)`_/`configuration module XBee (rst)`_
 * Tutoriel leds `tutoriel leds (html)`_/`tutoriel leds (rst)`_

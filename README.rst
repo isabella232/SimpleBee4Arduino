@@ -71,7 +71,7 @@ How to use ?
 * Configuration `XBee configuration (html)`_/`XBee configuration (rst)`_
 * Tutorials `Tutorials (html)`_/`Tutorials (rst)`_
 
-For info (more details):
+More details:
 
 * SimpleBee Message specification `SimpleBee message (html)`_/`SimpleBee message (rst)`_
 * XBee Module AT Command configuration `XBee detailed configuration (html)`_/`XBee detailed configuration (rst)`_

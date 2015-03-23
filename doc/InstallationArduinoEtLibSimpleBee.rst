@@ -2,7 +2,7 @@
 Installation Arduino et Lib SimpleBee4Arduino
 =============================================
 
-Configuration de l'IDE |Arduinologo| avec pour l'utilisation du kit SimpleBee4Arduino.
+Configuration de l'IDE |Arduinologo| pour l'utilisation du kit SimpleBee4Arduino.
 
 .. |OTBlogo| image:: http://openthebox.org/wp-content/uploads/2014/06/OB-Logo.png
 .. |Arduinologo| image:: http://upload.wikimedia.org/wikipedia/commons/4/42/Arduino_Uno_logo.png
@@ -37,7 +37,7 @@ Requirements
 Téléchargement et installation de |Arduinologo| IDE
 ---------------------------------------------------
 
-Aller sur le site de Arduino_ et télécharge la dernière version en fonction de votre OS.
+Aller sur le site de Arduino_ et télécharger la dernière version en fonction de votre OS.
 
 Installer selon l'OS:
  * `Windows <http://arduino.cc/en/Guide/Windows>`_
@@ -60,7 +60,7 @@ Dans l'IDE Arduino IDE, aller à croquis **>** Importer bibliothèque **>** ajou
 
 Dans croquis **>** Importer bibliothèque, vous avez maintenant la bibliothèque **SBMessenger**.
 
-Télécharger la derniètre version de la bibliothèque SimpleBee4Arduino (zip file) https://github.com/Orange-OpenSource/SimpleBee4Arduino/releases.
+Télécharger la dernière version de la bibliothèque SimpleBee4Arduino (zip file) https://github.com/Orange-OpenSource/SimpleBee4Arduino/releases.
 
 Dans l'IDE Arduino IDE, aller à croquis **>** Importer bibliothèque **>** ajouter bibliothèque et sélectionner le fichier zip téléchargé.
 

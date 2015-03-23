@@ -94,7 +94,7 @@ class CheckChangeMixin {
 <h2 id="définition-des-boutons-poussoir-fichier-pushpinout.h">Définition des boutons poussoir (fichier PushPinout.h)</h2>
 <p>Ici il s'agit de réaliser le comportement que l'on souhaite des boutons poussoirs en accord avec les actions de la plateforme OpenTheBox.</p>
 <p>Un message heartbeat (Message watchdog dans la spécification) doit être envoyé régulièrement vers OpenTheBox, la méthode <strong>sendHeartBeat</strong> doit être renseignée.</p>
-<p>Si un changement d'état survient, on peut emettre immédiatement ce nouvel état, la méthode <strong>checkChange</strong> doit être renseignée et émettre le message.</p>
+<p>Si un changement d'état survient, on peut émettre immédiatement ce nouvel état, la méthode <strong>checkChange</strong> doit être renseignée et émettre le message.</p>
 <pre class="sourceCode c"><code class="sourceCode c"><span class="co">/**</span>
 <span class="co"> * Override Push Button to process events</span>
 <span class="co"> */</span>
@@ -135,7 +135,7 @@ public:
 <h2 id="définition-des-interrupteurs-fichier-switchpinout.h">Définition des interrupteurs (fichier SwitchPinout.h)</h2>
 <p>Ici il s'agit de réaliser le comportement que l'on souhaite des interrupteurs en accord avec les actions de la plateforme OpenTheBox.</p>
 <p>Un message heartbeat (Message watchdog dans la spécification) doit être envoyé régulièrement vers OpenTheBox, la méthode <strong>sendHeartBeat</strong> doit être renseignée.</p>
-<p>Si un changement d'état survient, on peut emettre immédiatement ce nouvel état, la méthode <strong>checkChange</strong> doit être renseignée et émettre le message.</p>
+<p>Si un changement d'état survient, on peut émettre immédiatement ce nouvel état, la méthode <strong>checkChange</strong> doit être renseignée et émettre le message.</p>
 <pre class="sourceCode c"><code class="sourceCode c"><span class="ot">#include &quot;checkChangeMixin.h&quot;</span>
 <span class="co">/**</span>
 <span class="co"> * Override Switch to process events</span>
@@ -251,6 +251,10 @@ CheckChangeMixin * stbDeviceHardwareList[]={ &amp;switch1, &amp;switch2, &amp;pu
   }
 }</code></pre>
 </div>
+<div id="connexion-avec-openthebox" class="slide section level1">
+<h1>Connexion avec OpenTheBox</h1>
+<p>Voir le tutoriel sur <a href="http://www.openthebox.org">Open The Box</a></p>
+</div>
 <div id="pour-tester-sans-openthebox" class="slide section level1">
 <h1>Pour tester sans OpenTheBox</h1>
 <p>Vous devez avoir <strong>Python 2.X</strong> installé, et <strong>pip</strong>.</p>
@@ -294,7 +298,16 @@ CheckChangeMixin * stbDeviceHardwareList[]={ &amp;switch1, &amp;switch2, &amp;pu
 <span class="kw">2015-03-18</span> 17:34:39,838 - INFO simplebee -       {<span class="st">'batteryLevel'</span>: u<span class="st">'9'</span>, <span class="st">'value'</span>: u<span class="st">'0'</span>}
 <span class="kw">2015-03-18</span> 17:34:39,838 - INFO simplebee - -<span class="kw">&gt;</span> send sensor ack event w20020
 <span class="kw">2015-03-18</span> 17:34:39,840 - INFO simplebee -      [Identified 2002]</code></pre>
-<p>Le simulateur permet: * de voir les messages des devices sur le canal/PANID configuré * de répondre au messages des devices: * Les leds clignotes au rythme du hearbeat (par défaut 500 ms) * acquittement de message des buttons et interupteur</p>
+<dl>
+<dt>Le simulateur permet:</dt>
+<dd><ul>
+<li>de voir les messages des devices sur le canal/PANID configuré</li>
+<li>de répondre au messages des devices</li>
+<li>Les leds clignotent au rythme du hearbeat (par défaut 500 ms)</li>
+<li>d'émettre les acquittements des messages des buttons et interupteurs</li>
+</ul>
+</dd>
+</dl>
 </div>
 </body>
 </html>

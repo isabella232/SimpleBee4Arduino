@@ -82,7 +82,7 @@ Ici il s'agit de réaliser le comportement que l'on souhaite des boutons poussoi
 
 Un message heartbeat (Message watchdog dans la spécification) doit être envoyé régulièrement vers OpenTheBox, la méthode **sendHeartBeat** doit être renseignée.
 
-Si un changement d'état survient, on peut emettre immédiatement ce nouvel état, la méthode **checkChange** doit être renseignée et émettre le message.
+Si un changement d'état survient, on peut émettre immédiatement ce nouvel état, la méthode **checkChange** doit être renseignée et émettre le message.
 
 .. code-block:: c
 
@@ -131,7 +131,7 @@ Ici il s'agit de réaliser le comportement que l'on souhaite des interrupteurs e
 
 Un message heartbeat (Message watchdog dans la spécification) doit être envoyé régulièrement vers OpenTheBox, la méthode **sendHeartBeat** doit être renseignée.
 
-Si un changement d'état survient, on peut emettre immédiatement ce nouvel état, la méthode **checkChange** doit être renseignée et émettre le message.
+Si un changement d'état survient, on peut émettre immédiatement ce nouvel état, la méthode **checkChange** doit être renseignée et émettre le message.
 
 .. code-block:: c
 
@@ -257,6 +257,11 @@ C'est le programme principal, qui consiste essentiellement à configurer l'ensem
      }
    }
 
+ 
+Connexion avec OpenTheBox
+-------------------------
+
+Voir le tutoriel sur  `Open The Box`_
 
 Pour tester sans OpenTheBox
 ---------------------------
@@ -315,8 +320,7 @@ Lancer le simulateur, par exemple sur linux:
    2015-03-18 17:34:39,840 - INFO simplebee -      [Identified 2002]
    
 Le simulateur permet:
-* de voir les messages des devices sur le canal/PANID configuré
-* de répondre au messages des devices:
- * Les leds clignotes au rythme du hearbeat (par défaut 500 ms)
- * acquittement de message des buttons et interupteur
-   
+ * de voir les messages des devices sur le canal/PANID configuré
+ * de répondre au messages des devices
+ * Les leds clignotent au rythme du hearbeat (par défaut 500 ms)
+ * d'émettre les acquittements des messages des buttons et interupteurs   
