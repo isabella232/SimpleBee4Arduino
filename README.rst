@@ -2,7 +2,7 @@
 Simple Bee Arduino for Open The Box
 ===================================
 
-Library for |Arduinologo| device implementing SimpleBee protocole for |OTBlogo| platform.
+Library for |Arduinologo| device implementing SimpleBee protocol for |OTBlogo| platform.
         
         
 .. |OTBlogo| image:: http://openthebox.org/wp-content/uploads/2014/06/OB-Logo.png
