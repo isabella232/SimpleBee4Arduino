@@ -11,7 +11,7 @@ Library for |Arduinologo| device implementing SimpleBee protocol for |OTBlogo| p
 .. _Arduino: http://www.arduino.cc/
 
 
-Références
+References
 ----------
 * Arduino http://www.arduino.cc
 * `Arduino guide pour Xbee Shield`_
