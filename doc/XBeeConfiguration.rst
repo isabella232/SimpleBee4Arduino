@@ -31,7 +31,7 @@ Requirements
 Configurer le module Xbee
 -------------------------
 
-Dans un réseau XBee pour OpenTheBox, il y a un maître coté OpenTheBox (Raspberry pi) et n esclaves qui portent les prototypes d'objets communicants.
+Dans un réseau XBee pour OpenTheBox, il y a un maître côté OpenTheBox (Raspberry pi) et n esclaves qui portent les prototypes d'objets communicants.
 Pour fonctionner les modules doivent être sur le même **canal** et sur le même **PANID**. Par défaut, on ne touche rien d'autre sur la configuration.
 
 
@@ -61,7 +61,7 @@ Configurer module esclave
 
 Pour l'esclace, utiliser les bibliothèques SimpleBee4OTB_ et SimpleBeeMessenger_.
 
-Voir les exmples fournis dans Fichier > exemples > simpleBee4OTB (Open The Box)
+Voir les exemples fournis dans Fichier > exemples > simpleBee4OTB (Open The Box)
 
 .. code-block:: c
 

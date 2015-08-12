@@ -130,7 +130,7 @@ class PseudoDevice(Fysom):
         elif kwargs["typemodule"]=='A002':
             newSBDevice=SandTimerDevice(**kwargs)        
         elif sensor=='A':
-            newSBDevice=ActuarorDevice(**kwargs)
+            newSBDevice=ActuatorDevice(**kwargs)
         else:
             newSBDevice=None
         return newSBDevice
@@ -142,7 +142,7 @@ class PseudoDevice(Fysom):
         
 
 
-class ActuarorDevice(PseudoDevice):
+class ActuatorDevice(PseudoDevice):
     def onafterevt_newvalue(self,e):
         self.value = str(self.value[:-1]) + str((int(str(self.value[-1])) + 1)%10)
         msg=struct.pack("c4s",SBMsgReqType.request.lower(),self.addr)+ self.value
@@ -159,7 +159,7 @@ class SensorDevice(PseudoDevice):
         self.evt_valueack()    
           
 
-class SandTimerDevice(ActuarorDevice):
+class SandTimerDevice(ActuatorDevice):
     
     def __init__(self,*args,**kwargs):
         self.led=6
@@ -212,7 +212,7 @@ class SimpleBee(object):
             if SBMsgReqType.identification == msgType :
                 (msgType, sensor, typemodule, cksum)  =struct.unpack('cc3s2s', msg)
                 if checkMsgChecksum(msg):
-                    newSBDevice = SensorDevice(typemodule=sensor+typemodule, ser=self.ser) if sensor=='C' else ActuarorDevice(typemodule=sensor+typemodule, ser=self.ser)
+                    newSBDevice = SensorDevice(typemodule=sensor+typemodule, ser=self.ser) if sensor=='C' else ActuatorDevice(typemodule=sensor+typemodule, ser=self.ser)
                     newSBDevice.start()
                     self.list_liveObject[newSBDevice.addr]=newSBDevice
             elif msgType in [SBMsgReqType.request, SBMsgReqType.watchdog, SBMsgReqType.data]:
@@ -228,7 +228,7 @@ class SimpleBee(object):
                     if not device:
                         logger.error("  ->Unknown device %s auto provide", address)
                         device = PseudoDevice.factory(sensor, addr=str(address), typemodule=sensor+typemodule, ser=self.ser)
-                        #device = SensorDevice(addr=str(address), typemodule=sensor+typemodule, ser=self.ser) if sensor=='C' else ActuarorDevice(addr=address, typemodule=sensor+typemodule, ser=self.ser)
+                        #device = SensorDevice(addr=str(address), typemodule=sensor+typemodule, ser=self.ser) if sensor=='C' else ActuatorDevice(addr=address, typemodule=sensor+typemodule, ser=self.ser)
                         device.start()
                         self.list_liveObject[device.addr]=device
                     device.value=value
@@ -245,7 +245,7 @@ class SimpleBee(object):
         
 def launch_simplebee(parser=None):
     if not parser:
-        parser = argparse.ArgumentParser(description='simplebee emulateor')
+        parser = argparse.ArgumentParser(description='simplebee emulator')
     parser.add_argument('--debug', '-d', dest='debug', action='store_true',
                    default=False, help='Debug mode')
     parser.add_argument('--port', '-p', dest='port', action='store', help='xbee port com')
